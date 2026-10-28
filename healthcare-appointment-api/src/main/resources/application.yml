@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: healthcare-appointment-api
+  datasource:
+    # In-memory H2 by default so the app runs with zero setup. Use the "mysql" profile for MySQL.
+    url: jdbc:h2:mem:healthcare;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  autoconfigure:
+    # We issue our own JWTs; stop Spring creating a default user with a random password
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+
+app:
+  jwt:
+    # Override with the JWT_SECRET env var. Must be at least 32 characters.
+    secret: ${JWT_SECRET:dev-only-secret-change-me-use-32-plus-characters}
+    expiration-minutes: 60
+  seed:
+    enabled: true
